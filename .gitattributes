@@ -1,0 +1,6 @@
+# Prevent line ending conversion on binary/JS assets
+*.js binary
+*.css binary
+*.woff2 binary
+*.png binary
+*.jpg binary
