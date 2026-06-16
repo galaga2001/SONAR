@@ -162,7 +162,7 @@ export default function MapPanel({
           .querySelectorAll('.theater-poly')
           .forEach((p) => p.setAttribute('fill', 'url(#sonar-hatch)'))
       } catch (e) {
-        /* hatch is decorative; ignore */
+        console.warn('SONAR: SVG hatch pattern injection failed', e)
       }
     }, 300)
 

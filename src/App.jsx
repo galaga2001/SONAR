@@ -5,6 +5,7 @@ import MapPanel from './components/MapPanel'
 import AboutModal from './components/AboutModal'
 import Timeline, { monthIdxToCutoff, isVisibleAt, TOTAL_MONTHS } from './components/Timeline'
 import useAudio from './utils/useAudio'
+import { filterWrecks } from './utils/filters'
 import wrecksData from './data/wrecks.json'
 
 const wrecks = wrecksData
@@ -90,20 +91,7 @@ export default function App() {
   }, [cutoff])
 
   // filter matching (independent of timeline; non-matches dim rather than vanish)
-  const filteredIds = useMemo(() => {
-    const q = filters.query.trim().toLowerCase()
-    const set = new Set()
-    for (const w of wrecks) {
-      if (q && !w.name.toLowerCase().includes(q)) continue
-      if (filters.war !== 'All' && w.war !== filters.war) continue
-      if (filters.type !== 'All' && w.type !== filters.type) continue
-      if (filters.cause !== 'All' && w.cause !== filters.cause) continue
-      if (filters.theater !== 'All' && w.theater !== filters.theater) continue
-      if (filters.nations.length && !filters.nations.includes(w.nation)) continue
-      set.add(w.id)
-    }
-    return set
-  }, [filters])
+  const filteredIds = useMemo(() => filterWrecks(wrecks, filters), [filters])
 
   // wrecks currently counted: visible on timeline AND matching filters
   const countedWrecks = useMemo(

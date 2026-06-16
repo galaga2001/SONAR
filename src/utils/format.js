@@ -10,8 +10,10 @@ export function toDMS(value, isLat) {
   const abs = Math.abs(value)
   const deg = Math.floor(abs)
   const minFloat = (abs - deg) * 60
-  const min = Math.floor(minFloat)
-  const sec = Math.round((minFloat - min) * 60)
+  let min = Math.floor(minFloat)
+  let sec = Math.round((minFloat - min) * 60)
+  // floating-point rounding can push seconds to 60; carry into the next minute
+  if (sec === 60) { sec = 0; min += 1 }
   return `${deg}°${String(min).padStart(2, '0')}'${String(sec).padStart(2, '0')}"${hemisphere}`
 }
 
