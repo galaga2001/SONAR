@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "sonar",
+      "runtimeExecutable": "cmd",
+      "runtimeArgs": ["/c", "C:\\Users\\Robert Childs\\Desktop\\sonar\\run-sonar.cmd"],
+      "port": 5173
+    }
+  ]
+}
