@@ -9,8 +9,17 @@ export default function useAudio(muted) {
   const ensureContext = () => {
     if (ctxRef.current) return ctxRef.current
     const Ctx = window.AudioContext || window.webkitAudioContext
-    if (!Ctx) return null
-    const ctx = new Ctx()
+    if (!Ctx) {
+      console.warn('SONAR: Web Audio API not supported in this browser — audio disabled')
+      return null
+    }
+    let ctx
+    try {
+      ctx = new Ctx()
+    } catch (e) {
+      console.error('SONAR: Failed to create AudioContext', e)
+      return null
+    }
     ctxRef.current = ctx
 
     // ---- low ocean hum: filtered brown noise ----

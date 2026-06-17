@@ -65,14 +65,21 @@ export default function WreckProfile({ wreck, onClose }) {
       <div className="space-y-0.5">
         <Field label="VESSEL DESIGNATION" value={wreck.name} />
         <Field label="CLASS / TYPE" value={wreck.class} />
-        <Field label="DISPLACEMENT" value={`${commas(wreck.displacement_tons)} tons`} />
+        <Field
+          label="DISPLACEMENT"
+          value={wreck.displacement_tons != null ? `${commas(wreck.displacement_tons)} tons` : '—'}
+        />
         <Field label="NATION" value={wreck.nation} />
         <Field label="COMMISSIONED" value={wreck.commissioned_year} />
         <Field label="DATE OF LOSS" value={formatDate(wreck.date_lost)} />
         <Field label="POSITION" value={formatPosition(wreck.lat, wreck.lng)} />
         <Field
           label="DEPTH"
-          value={`${wreck.depth_m} m / ${commas(metersToFeet(wreck.depth_m))} ft`}
+          value={
+            wreck.depth_m != null
+              ? `${wreck.depth_m} m / ${commas(metersToFeet(wreck.depth_m))} ft`
+              : 'UNKNOWN'
+          }
         />
         <Field label="CAUSE OF LOSS" value={cause} />
         <Field label="THEATER" value={wreck.theater} />
@@ -87,7 +94,7 @@ export default function WreckProfile({ wreck, onClose }) {
 
       <div className="my-3 border-y border-sonar-border py-2">
         <div className="font-head text-[10px] tracking-widest text-sonar-dim mb-1">
-          CLASS SILHOUETTE — {wreck.type.toUpperCase()}
+          CLASS SILHOUETTE — {wreck.type?.toUpperCase() ?? '—'}
         </div>
         <Silhouette type={wreck.silhouette_type} />
       </div>
